@@ -2,8 +2,8 @@ const addForm = document.querySelector(".add");
 const list = document.querySelector(".todos");
 const search = document.querySelector(".search input");
 
-// funkcija za dodavanje liste
-const generisanje_templajta = (a) => {
+// function for adding lists
+const generate_template = (a) => {
     const html = `
         <li class="list-group-item d-flex justify-content-between align-items-center">
             <span>${a}</span>
@@ -11,21 +11,21 @@ const generisanje_templajta = (a) => {
         </li>`
     list.innerHTML += html;
 }
-//funkcija za filtriranje
-const filtriranje = (filtrirati) =>{
+//function for filtering
+const filtering = (to_filter) =>{
     Array.from(list.children)
-        .filter((vrijednost) =>{
-            return !vrijednost.textContent.includes(filtrirati)
+        .filter((value) =>{
+            return !value.textContent.includes(to_filter)
         })
-        .forEach((vrijednost) =>{
-            vrijednost.classList.add("filtrirano")
+        .forEach((value) =>{
+            value.classList.add("filtered")
         })
     Array.from(list.children)
-        .filter((vrijednost) =>{
-            return vrijednost.textContent.includes(filtrirati)
+        .filter((value) =>{
+            return value.textContent.includes(to_filter)
         })
-        .forEach((vrijednost) =>{
-            vrijednost.classList.remove("filtrirano")
+        .forEach((value) =>{
+            value.classList.remove("filtered")
         })
 }
 
@@ -33,23 +33,23 @@ addForm.addEventListener("submit", e =>{
     e.preventDefault();
     const todo = addForm.add.value.trim();
     if (todo !== ""){
-        generisanje_templajta(todo);
-        addForm.add.value = ""; // moze isto addFarm.reset();
+        generate_template(todo);
+        addForm.add.value = ""; // also addFarm.reset() can be used ;
     }else {
         addForm.add.value = "";
     }
 })
 
-// Za brisanje liste
+// To delete the list
 list.addEventListener("click", e => {
     if (e.target.classList.contains("delete")) {
         e.target.parentElement.remove();
     }
 });
 
-// Za trazenje odredene liste
+// To search for a specific list
 search.addEventListener("keyup", () => {
-    const vrijednost = search.value.trim();
-    filtriranje(vrijednost);
+    const value = search.value.trim();
+    filtering(value);
 });
 
